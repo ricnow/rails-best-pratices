@@ -1,0 +1,32 @@
+Documentation:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - "db/schema.rb"
+Style/NumericLiterals:
+  Exclude:
+    - "db/schema.rb"
+
+Style/EmptyLinesAroundBlockBody:
+  Exclude:
+    - "db/schema.rb"
+
+Style/StringLiterals:
+  Exclude:
+    - "db/schema.rb"
+
+Metrics/MethodLength:
+  Exclude:
+    - "db/migrate/*.rb"
+
+Metrics/BlockLength:
+  Exclude:
+    - "db/schema.rb"
+    # - 'Rakefile'
+    # - '**/*.rake'
+    # - 'test/**/*.rb'

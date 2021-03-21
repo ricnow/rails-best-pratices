@@ -1,0 +1,73 @@
+<div class="card-deck" id='card-deck'>
+    <% @widgets.map do |widget| %>
+    <% if widget.is_a?(PostsWidget) %>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="h3 mb-0">
+                <%= widget.name %> (<%= widget.posts.where(status: 1).count %>)
+                <%= 
+                    link_to ("<i class='fas fa-user-edit'></i>").html_safe ,
+                    new_posts_widget_post_path(widget) 
+                %>
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="mb-1">
+                <% widget.posts.where(status: 1).order(created_at: :desc).limit(4).map do |post| %>
+                <div class="media media-comment">
+                    <%= image_tag("avatars/#{post.avatar_name}.png", class: "avatar avatar-lg media-comment-avatar rounded-circle") %>
+                    <div class="media-body">
+                        <div class="media-comment-text">
+                            <h6 class="h5 mt-0"><%= post.username %></h6>
+                            <p class="text-sm lh-160">
+                                <%= post.title.html_safe%>
+                            </p>
+                            <div class="likes" id="post-<%= post.id%>">
+                                <%= render partial: 'increase_like', locals: { post: post, widget: widget } %>
+                            </div>
+
+                            <div class="relevance">
+                                <i class="ni ni-chart-bar-32"></i>
+                                <span class="text-muted"><%= "%5.2f" % post.relevance %>% relevância</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <% elsif widget.is_a?(TasksWidget) %>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="h3 mb-0"><%= widget.name %></h5>
+        </div>
+        <div class="card-body p-0">
+
+            <ul class="list-group list-group-flush">
+                <% widget.tasks.map do |task| %>
+                <li class="checklist-entry list-group-item flex-column align-items-start py-4 px-4">
+                    <div class="checklist-item checklist-item-<%= task['task_type'] %>">
+                        <div class="checklist-info">
+                            <h5 class="checklist-title mb-0"><%= task['title'] %></h5>
+                            <small><%=  Time.zone.parse(task['scheduled_to']).strftime("%d/%m/%Y às %I:%M%p") %></small>
+                        </div>
+                    </div>
+                </li>
+                <% end %>
+            </ul>
+        </div>
+    </div>
+    <% elsif widget.is_a?(VideoWidget) %>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="h3 mb-0"><%= widget.name %></h5>
+        </div>
+        <div class="card-body p-0">
+            <iframe id="ytplayer" type="text/html" width="100%" height="100%" src="http://www.youtube.com/embed/TfSm7v8zcYc?autoplay=1&origin=http://example.com" frameborder="0" />
+        </div>
+    </div>
+    <% end %>
+    <% end %>
+</div>

@@ -1,0 +1,2 @@
+alert('Vou atualizar o like');
+$("#post-<%= @post.id %>").html("<%= escape_javascript(render partial: 'boards/increase_like', locals: { post: @post, widget: @widget } ) %>");
